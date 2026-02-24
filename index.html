@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnolia Restó — Fine Dining in Mendoza</title>
+<meta name="description" content="Magnolia Restó — Where Mendoza dines in style. Fine dining, curated Argentine wines, and unforgettable nights at Arístides Villanueva 165, Mendoza.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a08;
+    --charcoal: #111110;
+    --dark: #1a1916;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --ivory: #f5f0e8;
+    --ivory-dim: rgba(245,240,232,0.7);
+    --wine: #7a1e2e;
+    --wine-light: #9e2840;
+    --muted: rgba(245,240,232,0.35);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Montserrat', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4vw;
+    transition: background 0.5s, padding 0.4s, backdrop-filter 0.5s;
+  }
+  nav.solid {
+    background: rgba(10,10,8,0.96);
+    backdrop-filter: blur(12px);
+    padding: 1rem 4vw;
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-decoration: none;
+    display: flex; flex-direction: column; line-height: 1;
+  }
+  .nav-logo span { font-size: 0.5rem; letter-spacing: 0.35em; color: var(--muted); font-family: var(--sans); font-weight: 400; margin-top: 3px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--ivory-dim); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+    border: 1px solid var(--gold); color: var(--gold); padding: 0.6rem 1.5rem;
+    text-decoration: none; transition: all 0.3s; font-weight: 400;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--black); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 1px; background: var(--gold); transition: all 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; height: 100vh; min-height: 680px;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(122,30,46,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 30%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      linear-gradient(to bottom, rgba(10,10,8,0.3) 0%, rgba(10,10,8,0.7) 60%, rgba(10,10,8,0.97) 100%);
+    z-index: 1;
+  }
+  .hero-canvas {
+    position: absolute; inset: 0;
+    background: var(--dark);
+    z-index: 0;
+  }
+  /* Animated background elements simulating candlelight/wine */
+  .hero-orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); animation: orbFloat 8s ease-in-out infinite;
+  }
+  .orb-1 { width: 500px; height: 500px; background: rgba(122,30,46,0.3); top: 10%; left: 20%; animation-delay: 0s; }
+  .orb-2 { width: 350px; height: 350px; background: rgba(201,168,76,0.12); top: 40%; right: 15%; animation-delay: 3s; }
+  .orb-3 { width: 280px; height: 280px; background: rgba(122,30,46,0.2); bottom: 20%; left: 50%; animation-delay: 5s; }
+  @keyframes orbFloat {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(30px,-20px) scale(1.08); }
+  }
+  /* Grain texture */
+  .hero-grain {
+    position: absolute; inset: 0; z-index: 2; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative; z-index: 3;
+    padding: 0 8vw 8vh;
+    max-width: 700px;
+  }
+  .hero-eyebrow {
+    font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gold); font-family: var(--sans); font-weight: 400;
+    margin-bottom: 1.2rem; opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+  .hero-h1 {
+    font-family: var(--serif); font-weight: 300; font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.05; letter-spacing: 0.02em; color: var(--ivory);
+    opacity: 0; animation: fadeUp 1s 0.6s forwards;
+  }
+  .hero-h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub {
+    margin-top: 1.5rem; font-size: 0.85rem; letter-spacing: 0.1em;
+    color: var(--ivory-dim); font-weight: 300; line-height: 1.7;
+    opacity: 0; animation: fadeUp 1s 0.9s forwards;
+  }
+  .hero-btns {
+    margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 1s 1.2s forwards;
+  }
+  .btn-primary {
+    display: inline-block; padding: 1rem 2.5rem; background: var(--gold);
+    color: var(--black); font-family: var(--sans); font-size: 0.6rem;
+    letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none;
+    font-weight: 500; transition: all 0.35s; border: 1px solid var(--gold);
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0; background: var(--gold-light);
+    transform: translateX(-100%); transition: transform 0.4s;
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-primary:hover { box-shadow: 0 0 30px rgba(201,168,76,0.35); }
+  .btn-outline {
+    display: inline-block; padding: 1rem 2.5rem; border: 1px solid var(--muted);
+    color: var(--ivory-dim); font-size: 0.6rem; letter-spacing: 0.22em;
+    text-transform: uppercase; text-decoration: none; font-weight: 400;
+    transition: all 0.35s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; right: 8vw; z-index: 3;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0; animation: fadeIn 1s 2s forwards;
+  }
+  .hero-scroll span { font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s infinite; }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.3); } }
+
+  /* ── FADE ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s, transform 0.8s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.35s; }
+  .reveal-delay-4 { transition-delay: 0.5s; }
+
+  /* ── SECTION BASICS ── */
+  section { padding: 8rem 8vw; }
+  .section-label {
+    font-size: 0.55rem; letter-spacing: 0.45em; text-transform: uppercase;
+    color: var(--gold); font-weight: 400; display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .section-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
+  h2.section-title {
+    font-family: var(--serif); font-weight: 300; font-size: clamp(2.2rem, 4.5vw, 4rem);
+    line-height: 1.1; letter-spacing: 0.02em; margin-bottom: 1.5rem;
+  }
+  h2.section-title em { font-style: italic; color: var(--gold-light); }
+  .section-divider { width: 60px; height: 1px; background: var(--gold); margin-bottom: 2rem; }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--charcoal);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .about-text p {
+    font-size: 0.95rem; line-height: 2; color: var(--ivory-dim); margin-bottom: 1.5rem; font-weight: 300;
+  }
+  .about-text p.lead { font-family: var(--serif); font-size: 1.4rem; line-height: 1.6; color: var(--ivory); font-weight: 300; font-style: italic; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
+  .stat { border-top: 1px solid rgba(201,168,76,0.2); padding-top: 1.2rem; }
+  .stat-num { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; }
+  .about-img-wrap {
+    position: relative;
+    height: 600px;
+  }
+  .about-img-main {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(122,30,46,0.4) 0%, rgba(26,25,22,0.8) 50%, rgba(10,10,8,0.9) 100%);
+    border: 1px solid rgba(201,168,76,0.1);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .about-img-main::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 40% 40%, rgba(122,30,46,0.5) 0%, transparent 60%),
+      radial-gradient(circle at 80% 70%, rgba(201,168,76,0.1) 0%, transparent 50%);
+  }
+  .about-img-icon {
+    font-size: 8rem; opacity: 0.15; position: relative; z-index: 1;
+    animation: breathe 4s ease-in-out infinite;
+  }
+  @keyframes breathe { 0%,100% { transform: scale(1); opacity: 0.12; } 50% { transform: scale(1.05); opacity: 0.18; } }
+  .about-badge {
+    position: absolute; bottom: -1.5rem; left: -1.5rem;
+    background: var(--gold); color: var(--black); padding: 1.5rem;
+    font-family: var(--serif);
+  }
+  .about-badge strong { display: block; font-size: 2rem; font-weight: 500; line-height: 1; }
+  .about-badge span { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--black); }
+  .experience-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem;
+  }
+  .exp-card {
+    border: 1px solid rgba(201,168,76,0.1); padding: 2rem 1.5rem;
+    position: relative; overflow: hidden; cursor: default;
+    transition: border-color 0.4s, transform 0.4s;
+    background: linear-gradient(135deg, rgba(26,25,22,0.8), rgba(10,10,8,0.9));
+  }
+  .exp-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05), transparent);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .exp-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+  .exp-card:hover::before { opacity: 1; }
+  .exp-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .exp-name { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--ivory); margin-bottom: 0.5rem; }
+  .exp-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.6; letter-spacing: 0.05em; }
+
+  /* ── MENU ── */
+  #menu { background: var(--charcoal); }
+  .menu-tabs {
+    display: flex; gap: 0; flex-wrap: wrap; margin: 3rem 0 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .menu-tab {
+    padding: 0.8rem 1.5rem; font-size: 0.6rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted); cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color 0.3s, border-color 0.3s; font-weight: 400;
+  }
+  .menu-tab.active { color: var(--gold); border-color: var(--gold); }
+  .menu-tab:hover { color: var(--gold-light); }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .menu-card {
+    border: 1px solid rgba(201,168,76,0.08); padding: 2rem;
+    position: relative; overflow: hidden; cursor: default;
+    transition: all 0.4s; background: rgba(10,10,8,0.6);
+  }
+  .menu-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--wine));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .menu-card:hover { border-color: rgba(201,168,76,0.2); transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+  .menu-card:hover::after { transform: scaleX(1); }
+  .menu-category { font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+  .menu-item-name { font-family: var(--serif); font-size: 1.25rem; font-weight: 400; color: var(--ivory); margin-bottom: 0.5rem; }
+  .menu-item-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+  .menu-price { font-family: var(--serif); font-size: 1.1rem; color: var(--gold); font-weight: 300; }
+
+  /* ── WINE SHOWCASE ── */
+  #wine {
+    background: var(--black);
+    position: relative; overflow: hidden;
+    padding: 8rem 0;
+  }
+  .wine-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(122,30,46,0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.05) 0%, transparent 50%);
+  }
+  .wine-inner {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    max-width: 1400px; margin: 0 auto; padding: 0 8vw;
+  }
+  .wine-text { padding-right: 5rem; }
+  .wine-text p { font-size: 0.95rem; line-height: 2; color: var(--ivory-dim); margin-bottom: 1.5rem; }
+  .wine-features { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+  .wine-feature { display: flex; align-items: flex-start; gap: 1rem; }
+  .wine-feature-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-top: 6px; flex-shrink: 0; }
+  .wine-feature-text { font-size: 0.82rem; color: var(--ivory-dim); line-height: 1.6; }
+  .wine-visual {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .wine-card {
+    position: relative; overflow: hidden; aspect-ratio: 3/4;
+    border: 1px solid rgba(201,168,76,0.1);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(122,30,46,0.3), rgba(10,10,8,0.9));
+    transition: transform 0.4s, border-color 0.4s;
+    cursor: default;
+  }
+  .wine-card:hover { transform: scale(1.02); border-color: rgba(201,168,76,0.3); }
+  .wine-card:nth-child(2) { margin-top: 2rem; background: linear-gradient(135deg, rgba(26,25,22,0.9), rgba(122,30,46,0.2)); }
+  .wine-card-icon { font-size: 2.5rem; opacity: 0.6; }
+  .wine-card-label { font-family: var(--serif); font-size: 1rem; color: var(--ivory); font-weight: 300; }
+  .wine-card-sublabel { font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--charcoal); }
+  .rating-hero {
+    display: flex; align-items: center; gap: 2rem; margin-bottom: 3.5rem;
+    padding: 2.5rem; border: 1px solid rgba(201,168,76,0.15);
+    background: rgba(10,10,8,0.5); max-width: 500px;
+  }
+  .rating-num { font-family: var(--serif); font-size: 5rem; font-weight: 300; color: var(--gold); line-height: 1; }
+  .rating-right { display: flex; flex-direction: column; gap: 0.4rem; }
+  .stars { color: var(--gold); font-size: 1.1rem; letter-spacing: 0.1em; }
+  .rating-count { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .testimonial-card {
+    padding: 2rem; border: 1px solid rgba(201,168,76,0.08);
+    background: rgba(10,10,8,0.6); position: relative; overflow: hidden;
+    transition: border-color 0.4s, transform 0.4s;
+  }
+  .testimonial-card::before {
+    content: '\201C'; font-family: var(--serif); font-size: 5rem; color: var(--gold);
+    opacity: 0.1; position: absolute; top: -0.5rem; left: 1rem; line-height: 1;
+  }
+  .testimonial-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-3px); }
+  .t-text { font-size: 0.85rem; line-height: 1.9; color: var(--ivory-dim); margin-bottom: 1.5rem; font-style: italic; font-family: var(--serif); font-weight: 300; position: relative; z-index: 1; }
+  .t-author { display: flex; align-items: center; gap: 0.8rem; }
+  .t-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--wine), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; color: var(--ivory); font-weight: 500; font-family: var(--sans);
+  }
+  .t-name { font-size: 0.72rem; color: var(--ivory); font-weight: 400; letter-spacing: 0.05em; }
+  .t-date { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; }
+
+  /* ── RESERVATION ── */
+  #reservation {
+    background: var(--black);
+    position: relative; overflow: hidden;
+  }
+  .reservation-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(122,30,46,0.15) 0%, transparent 60%);
+  }
+  .reservation-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; text-align: center; }
+  .reservation-inner .section-label { justify-content: center; }
+  .reservation-inner .section-label::before { display: none; }
+  .reservation-inner .section-title { text-align: center; }
+  .reservation-note {
+    font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; margin: 1rem 0 2.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .reservation-note::before, .reservation-note::after { content: '—'; color: var(--gold); opacity: 0.4; }
+  form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; text-align: left; }
+  label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+  input, select, textarea {
+    background: rgba(26,25,22,0.8); border: 1px solid rgba(201,168,76,0.15);
+    color: var(--ivory); padding: 0.9rem 1rem; font-family: var(--sans);
+    font-size: 0.82rem; font-weight: 300; outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    -webkit-appearance: none; appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.05);
+  }
+  input::placeholder, textarea::placeholder { color: rgba(245,240,232,0.2); }
+  select option { background: var(--dark); }
+  textarea { resize: vertical; min-height: 100px; }
+  .form-submit { grid-column: 1 / -1; margin-top: 0.5rem; }
+  .form-submit .btn-primary { width: 100%; text-align: center; display: block; font-size: 0.62rem; padding: 1.1rem; cursor: pointer; border: none; }
+
+  /* ── LOCATION ── */
+  #location {
+    background: var(--charcoal);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .location-info { }
+  .location-item { display: flex; gap: 1rem; margin-bottom: 1.8rem; align-items: flex-start; }
+  .location-icon { font-size: 1.1rem; margin-top: 2px; opacity: 0.7; }
+  .location-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+  .location-value { font-size: 0.88rem; color: var(--ivory-dim); line-height: 1.6; }
+  .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1rem; margin-top: 0.5rem; }
+  .hours-day { font-size: 0.72rem; color: var(--muted); }
+  .hours-time { font-size: 0.72rem; color: var(--ivory-dim); }
+  .map-wrap {
+    border: 1px solid rgba(201,168,76,0.1); overflow: hidden; height: 420px;
+    position: relative;
+  }
+  .map-wrap iframe { width: 100%; height: 100%; border: none; filter: grayscale(0.7) contrast(1.1); }
+  .map-overlay-tag {
+    position: absolute; top: 1rem; left: 1rem;
+    background: rgba(10,10,8,0.9); border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.6rem 1rem; font-size: 0.6rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gold); pointer-events: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black); border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 4rem 8vw 2rem;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+    padding-bottom: 3rem; border-bottom: 1px solid rgba(201,168,76,0.08);
+    margin-bottom: 2rem;
+  }
+  .footer-brand .footer-logo { font-family: var(--serif); font-size: 1.8rem; color: var(--gold); font-weight: 300; letter-spacing: 0.1em; }
+  .footer-brand p { font-size: 0.78rem; color: var(--muted); line-height: 1.8; margin-top: 0.8rem; max-width: 260px; }
+  .footer-socials { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+  .social-link {
+    width: 36px; height: 36px; border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); text-decoration: none; font-size: 0.85rem;
+    transition: all 0.3s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
+  .footer-col h4 { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col a { text-decoration: none; color: var(--muted); font-size: 0.78rem; transition: color 0.3s; }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-col p { color: var(--muted); font-size: 0.78rem; line-height: 1.8; }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 0.62rem; color: rgba(245,240,232,0.2); letter-spacing: 0.1em; }
+  .footer-tagline { font-family: var(--serif); font-style: italic; color: var(--gold); opacity: 0.6; font-size: 0.85rem; }
+
+  /* ── MOBILE MENU ── */
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 90;
+    background: rgba(10,10,8,0.98); backdrop-filter: blur(20px);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 2.5rem;
+    transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu a { font-family: var(--serif); font-size: 2.5rem; color: var(--ivory); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+  .mobile-menu a:hover { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .experience-grid { grid-template-columns: repeat(2, 1fr); }
+    .menu-panel.active { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    section { padding: 5rem 6vw; }
+    nav { padding: 1.2rem 6vw; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    #about, #location { grid-template-columns: 1fr; gap: 3rem; }
+    .about-img-wrap { height: 350px; }
+    .wine-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .wine-text { padding-right: 0; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .experience-grid { grid-template-columns: 1fr 1fr; }
+    .menu-panel.active { grid-template-columns: 1fr; }
+    form { grid-template-columns: 1fr; }
+    .form-full { grid-column: 1; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .rating-hero { flex-direction: column; text-align: center; }
+    .hero-h1 { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Magnolia<span>Fine Dining · Mendoza</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Nosotros</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#wine">Vinos</a></li>
+    <li><a href="#testimonials">Reseñas</a></li>
+    <li><a href="#location">Ubicación</a></li>
+  </ul>
+  <a href="#reservation" class="nav-cta">Reserve su Mesa</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">Nosotros</a>
+  <a href="#menu" onclick="toggleMenu()">Menú</a>
+  <a href="#wine" onclick="toggleMenu()">Vinos</a>
+  <a href="#testimonials" onclick="toggleMenu()">Reseñas</a>
+  <a href="#reservation" onclick="toggleMenu()">Reservas</a>
+  <a href="#location" onclick="toggleMenu()">Ubicación</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-canvas">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+    <div class="hero-orb orb-3"></div>
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Mendoza, Argentina</div>
+    <h1 class="hero-h1">Where Mendoza<br><em>Dines in Style.</em></h1>
+    <p class="hero-sub">Fine dining, curated Argentine wines,<br>and unforgettable nights.</p>
+    <div class="hero-btns">
+      <a href="#reservation" class="btn-primary"><span>Reserve a Table</span></a>
+      <a href="#menu" class="btn-outline">View Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text reveal">
+    <div class="section-label">Nuestra Historia</div>
+    <h2 class="section-title">An <em>Experience</em><br>Beyond the Plate</h2>
+    <div class="section-divider"></div>
+    <p class="lead">"Every evening at Magnolia is a journey through the finest flavors of Mendoza and beyond."</p>
+    <p>Nestled in the heart of Arístides Villanueva, Mendoza's most vibrant culinary corridor, Magnolia Restó has become the destination for those who seek more than a meal — they seek a memory. Our kitchen blends Argentine tradition with contemporary technique, celebrating the extraordinary produce and wines of the Cuyo region.</p>
+    <p>Whether you arrive for a romantic dinner à deux, a milestone celebration, or a leisurely weekend brunch, our team orchestrates every detail with quiet precision. Fashionable, intimate, and endlessly warm — Magnolia is Mendoza's finest table.</p>
+    <div class="about-stats">
+      <div class="stat reveal reveal-delay-1">
+        <div class="stat-num">4.6★</div>
+        <div class="stat-label">Customer Rating</div>
+      </div>
+      <div class="stat reveal reveal-delay-2">
+        <div class="stat-num">4,600+</div>
+        <div class="stat-label">Verified Reviews</div>
+      </div>
+      <div class="stat reveal reveal-delay-3">
+        <div class="stat-num">$20K+</div>
+        <div class="stat-label">ARS Per Person</div>
+      </div>
+      <div class="stat reveal reveal-delay-4">
+        <div class="stat-num">11:30</div>
+        <div class="stat-label">Open Until (PM)</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-img-wrap reveal reveal-delay-2">
+    <div class="about-img-main">
+      <div class="about-img-icon">🌸</div>
+    </div>
+    <div class="about-badge">
+      <strong>Est.</strong>
+      <span>Mendoza · Argentina</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="reveal">
+    <div class="section-label">Lo Que Ofrecemos</div>
+    <h2 class="section-title">The <em>Magnolia</em> Experience</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="experience-grid">
+    <div class="exp-card reveal reveal-delay-1">
+      <span class="exp-icon">🌿</span>
+      <div class="exp-name">Terraza & Jardín</div>
+      <div class="exp-desc">Dine al fresco beneath the Mendoza sky with our beautifully lit outdoor terrace — romantic, serene, and unforgettable.</div>
+    </div>
+    <div class="exp-card reveal reveal-delay-2">
+      <span class="exp-icon">🍷</span>
+      <div class="exp-name">Bodega Seleccionada</div>
+      <div class="exp-desc">A curated cellar featuring Mendoza's finest Malbecs, Cabs, and whites from premier bodegas across the Cuyo region.</div>
+    </div>
+    <div class="exp-card reveal reveal-delay-3">
+      <span class="exp-icon">🍸</span>
+      <div class="exp-name">Cocktails de Autor</div>
+      <div class="exp-desc">Signature mixology crafted by our bar team — from smoky mezcal creations to elegant wine-based aperitivos.</div>
+    </div>
+    <div class="exp-card reveal reveal-delay-4">
+      <span class="exp-icon">☕</span>
+      <div class="exp-name">Café & Té Especialidad</div>
+      <div class="exp-desc">Specialty single-origin coffees and curated tea selections to complement every moment of your dining journey.</div>
+    </div>
+    <div class="exp-card reveal reveal-delay-1">
+      <span class="exp-icon">🌙</span>
+      <div class="exp-name">Late-Night Dining</div>
+      <div class="exp-desc">Our kitchen serves until 11:30 PM — because the best nights in Mendoza always last a little longer.</div>
+    </div>
+    <div class="exp-card reveal reveal-delay-2">
+      <span class="exp-icon">🌱</span>
+      <div class="exp-name">Opciones Vegetarianas</div>
+      <div class="exp-desc">Thoughtfully crafted vegetarian and plant-based dishes that celebrate seasonal Mendocino ingredients.</div>
+    </div>
+    <div class="exp-card reveal reveal-delay-3">
+      <span class="exp-icon">👥</span>
+      <div class="exp-name">Grupos & Eventos</div>
+      <div class="exp-desc">Private dining rooms and tailored menus for birthdays, anniversaries, corporate events, and group celebrations.</div>
+    </div>
+    <div class="exp-card reveal reveal-delay-4">
+      <span class="exp-icon">♿</span>
+      <div class="exp-name">Acceso Universal</div>
+      <div class="exp-desc">Fully accessible facilities ensuring every guest can enjoy the Magnolia experience with complete comfort.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="reveal">
+    <div class="section-label">Nuestra Carta</div>
+    <h2 class="section-title">A Menu <em>Crafted</em><br>with Intention</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="menu-tabs">
+    <div class="menu-tab active" onclick="switchTab('dinner')">Dinner</div>
+    <div class="menu-tab" onclick="switchTab('lunch')">Lunch</div>
+    <div class="menu-tab" onclick="switchTab('brunch')">Brunch</div>
+    <div class="menu-tab" onclick="switchTab('desserts')">Desserts</div>
+    <div class="menu-tab" onclick="switchTab('wines')">Wines</div>
+    <div class="menu-tab" onclick="switchTab('cocktails')">Cocktails</div>
+  </div>
+
+  <div id="tab-dinner" class="menu-panel active">
+    <div class="menu-card">
+      <div class="menu-category">Entradas</div>
+      <div class="menu-item-name">Carpaccio de Lomo</div>
+      <div class="menu-item-desc">Thinly sliced tenderloin, truffle oil, Parmigiano-Reggiano, fresh herbs, and a touch of Mendoza extra virgin olive oil.</div>
+      <div class="menu-price">$4,200 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Entradas</div>
+      <div class="menu-item-name">Burrata de la Casa</div>
+      <div class="menu-item-desc">Creamy artisan burrata with heirloom tomatoes, basil oil, smoked salt, and grilled sourdough crostini.</div>
+      <div class="menu-price">$3,800 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Principal</div>
+      <div class="menu-item-name">Bife de Chorizo Magnolia</div>
+      <div class="menu-item-desc">300g prime-cut Hereford sirloin, chimichurri negro, bone marrow butter, crispy potatoes, and seasonal greens.</div>
+      <div class="menu-price">$8,500 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Principal</div>
+      <div class="menu-item-name">Trucha del Lago</div>
+      <div class="menu-item-desc">Pan-seared Patagonian trout, saffron emulsion, capers, charred leek, and roasted Andean potatoes.</div>
+      <div class="menu-price">$7,200 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Principal</div>
+      <div class="menu-item-name">Risotto al Malbec</div>
+      <div class="menu-item-desc">Slow-cooked Arborio rice with Luján de Cuyo Malbec reduction, aged Manchego, and black truffle shavings.</div>
+      <div class="menu-price">$6,400 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Especial</div>
+      <div class="menu-item-name">Tasting Menu — 5 Courses</div>
+      <div class="menu-item-desc">Chef's seasonal journey through Mendoza's finest ingredients, paired with curated wines from our cellar. Reservations required.</div>
+      <div class="menu-price">$22,000 ARS</div>
+    </div>
+  </div>
+
+  <div id="tab-lunch" class="menu-panel">
+    <div class="menu-card">
+      <div class="menu-category">Medio Día</div>
+      <div class="menu-item-name">Ensalada César Magnolia</div>
+      <div class="menu-item-desc">Romaine hearts, house-cured anchovy, aged Parmigiano, house dressing, and sourdough croutons.</div>
+      <div class="menu-price">$3,200 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Medio Día</div>
+      <div class="menu-item-name">Milanesa Gourmet</div>
+      <div class="menu-item-desc">Breaded tenderloin with lemon-herb butter, arugula salad, and roasted garlic aioli.</div>
+      <div class="menu-price">$5,800 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Medio Día</div>
+      <div class="menu-item-name">Pasta del Día</div>
+      <div class="menu-item-desc">Fresh house-made pasta with rotating seasonal sauce — ask your server for today's creation.</div>
+      <div class="menu-price">$4,900 ARS</div>
+    </div>
+  </div>
+
+  <div id="tab-brunch" class="menu-panel">
+    <div class="menu-card">
+      <div class="menu-category">Brunch</div>
+      <div class="menu-item-name">Eggs Benedict Mendocino</div>
+      <div class="menu-item-desc">Poached eggs, cured ham, English muffin, and saffron hollandaise with a side of house potatoes.</div>
+      <div class="menu-price">$4,100 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Brunch</div>
+      <div class="menu-item-name">Tostadas Artesanas</div>
+      <div class="menu-item-desc">Sourdough toasts with avocado, smoked salmon, cream cheese, and microgreens.</div>
+      <div class="menu-price">$3,600 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Brunch</div>
+      <div class="menu-item-name">Pancakes de Almendra</div>
+      <div class="menu-item-desc">Almond flour stacks with bourbon maple syrup, seasonal berries, and Chantilly cream.</div>
+      <div class="menu-price">$3,300 ARS</div>
+    </div>
+  </div>
+
+  <div id="tab-desserts" class="menu-panel">
+    <div class="menu-card">
+      <div class="menu-category">Postres</div>
+      <div class="menu-item-name">Fondant de Chocolate Negro</div>
+      <div class="menu-item-desc">Warm 70% dark chocolate molten cake, salted caramel ice cream, and cocoa tuile.</div>
+      <div class="menu-price">$2,800 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Postres</div>
+      <div class="menu-item-name">Crème Brûlée de Lavanda</div>
+      <div class="menu-item-desc">Lavender-infused custard with caramelized sugar crust and fresh Mendoza berries.</div>
+      <div class="menu-price">$2,600 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Postres</div>
+      <div class="menu-item-name">Tabla de Quesos Artesanales</div>
+      <div class="menu-item-desc">Three regional cheeses, honeycomb, Andean walnuts, quince paste, and artisan crackers.</div>
+      <div class="menu-price">$4,200 ARS</div>
+    </div>
+  </div>
+
+  <div id="tab-wines" class="menu-panel">
+    <div class="menu-card">
+      <div class="menu-category">Malbec</div>
+      <div class="menu-item-name">Achaval Ferrer — Luján de Cuyo</div>
+      <div class="menu-item-desc">Deep violet, complex with plum, dark cherry, and subtle tobacco. A Mendoza icon. 2021 vintage.</div>
+      <div class="menu-price">$9,800 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Blend Tinto</div>
+      <div class="menu-item-name">Zuccardi Valle de Uco — Serie A</div>
+      <div class="menu-item-desc">Malbec, Cabernet Franc, and Petit Verdot — structured, elegant, with a long mineral finish. 2020.</div>
+      <div class="menu-price">$12,500 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Blanco</div>
+      <div class="menu-item-name">Clos de los Siete — Torrontés</div>
+      <div class="menu-item-desc">Aromatic Torrontés with notes of jasmine, peach, and citrus. Crisp, floral, and utterly Mendocino. 2022.</div>
+      <div class="menu-price">$7,200 ARS</div>
+    </div>
+  </div>
+
+  <div id="tab-cocktails" class="menu-panel">
+    <div class="menu-card">
+      <div class="menu-category">Firma</div>
+      <div class="menu-item-name">Magnolia Sour</div>
+      <div class="menu-item-desc">Pisco peruano, fresh lemon, lavender syrup, egg white foam, and a rose petal garnish.</div>
+      <div class="menu-price">$2,900 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Firma</div>
+      <div class="menu-item-name">El Malbequito</div>
+      <div class="menu-item-desc">Bourbon, Malbec reduction, orange bitters, burnt orange peel. Our take on the classic Old Fashioned.</div>
+      <div class="menu-price">$3,200 ARS</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-category">Sin Alcohol</div>
+      <div class="menu-item-name">Jardín Andino</div>
+      <div class="menu-item-desc">Sparkling water, cucumber, elderflower, fresh mint, and lime. A garden in a glass.</div>
+      <div class="menu-price">$1,800 ARS</div>
+    </div>
+  </div>
+</section>
+
+<!-- WINE SHOWCASE -->
+<section id="wine">
+  <div class="wine-bg"></div>
+  <div class="wine-inner">
+    <div class="wine-text reveal">
+      <div class="section-label">Nuestra Bodega</div>
+      <h2 class="section-title">The Wines of<br><em>Mendoza</em></h2>
+      <div class="section-divider"></div>
+      <p>At Magnolia, wine is not an afterthought — it is the soul of our table. We have curated an extraordinary cellar drawing from the most acclaimed bodegas of Luján de Cuyo, Valle de Uco, and the broader Mendoza appellation.</p>
+      <p>Our sommelier team is dedicated to pairing each dish with a wine that elevates both. From iconic Malbecs to expressive Torrontés and structured blends, every bottle tells the story of Argentina's most extraordinary wine-growing region.</p>
+      <div class="wine-features">
+        <div class="wine-feature">
+          <div class="wine-feature-dot"></div>
+          <div class="wine-feature-text"><strong style="color:var(--ivory)">100+ labels</strong> from Mendoza's premier bodegas and boutique producers</div>
+        </div>
+        <div class="wine-feature">
+          <div class="wine-feature-dot"></div>
+          <div class="wine-feature-text"><strong style="color:var(--ivory)">Expert sommelier</strong> guidance and personalized wine pairing menus</div>
+        </div>
+        <div class="wine-feature">
+          <div class="wine-feature-dot"></div>
+          <div class="wine-feature-text"><strong style="color:var(--ivory)">Signature cocktails</strong> crafted by our in-house mixology team</div>
+        </div>
+        <div class="wine-feature">
+          <div class="wine-feature-dot"></div>
+          <div class="wine-feature-text"><strong style="color:var(--ivory)">Private wine tastings</strong> available for groups and special occasions</div>
+        </div>
+      </div>
+    </div>
+    <div class="wine-visual reveal reveal-delay-2">
+      <div class="wine-card">
+        <div class="wine-card-icon">🍷</div>
+        <div class="wine-card-label">Argentine Malbec</div>
+        <div class="wine-card-sublabel">Luján de Cuyo · Valle de Uco</div>
+      </div>
+      <div class="wine-card">
+        <div class="wine-card-icon">🍸</div>
+        <div class="wine-card-label">Signature Cocktails</div>
+        <div class="wine-card-sublabel">Crafted Nightly</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="reveal">
+    <div class="section-label">Nuestros Huéspedes</div>
+    <h2 class="section-title">What Our <em>Guests</em> Say</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="rating-hero reveal">
+    <div class="rating-num">4.6</div>
+    <div class="rating-right">
+      <div class="stars">★ ★ ★ ★ ★</div>
+      <div style="font-family:var(--serif);font-size:1rem;color:var(--ivory);">Exceptional</div>
+      <div class="rating-count">Based on 4,600+ verified reviews</div>
+    </div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal reveal-delay-1">
+      <p class="t-text">An absolute revelation. The Malbec-braised short rib melted away and the wine pairing was inspired. Magnolia is without doubt the finest table in Mendoza — possibly in Argentina.</p>
+      <div class="t-author">
+        <div class="t-avatar">MG</div>
+        <div>
+          <div class="t-name">Martín G.</div>
+          <div class="t-date">Buenos Aires · enero 2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <p class="t-text">We celebrated our anniversary here and it was simply magical. The ambiance, the service, the attention to every detail — everything was extraordinary. We'll return every time we visit Mendoza.</p>
+      <div class="t-author">
+        <div class="t-avatar">SL</div>
+        <div>
+          <div class="t-name">Sofia & Lucas</div>
+          <div class="t-date">Córdoba · febrero 2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-3">
+      <p class="t-text">As a French chef visiting Argentina, I was skeptical. I left humbled. The seasonal tasting menu showed a deep understanding of terroir and technique. Magnolia deserves international recognition.</p>
+      <div class="t-author">
+        <div class="t-avatar">PB</div>
+        <div>
+          <div class="t-name">Pierre B.</div>
+          <div class="t-date">Lyon, France · diciembre 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <p class="t-text">The outdoor terrace at golden hour with a glass of Zuccardi and the burrata — this is what travel is for. I've been dreaming about that dinner ever since I returned home.</p>
+      <div class="t-author">
+        <div class="t-avatar">EK</div>
+        <div>
+          <div class="t-name">Emily K.</div>
+          <div class="t-date">New York, USA · noviembre 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <p class="t-text">Came for a business dinner with international clients and Magnolia made us look exceptional. The service is impeccable — attentive without being intrusive. The risotto al Malbec was extraordinary.</p>
+      <div class="t-author">
+        <div class="t-avatar">RA</div>
+        <div>
+          <div class="t-name">Ricardo A.</div>
+          <div class="t-date">Mendoza · enero 2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-3">
+      <p class="t-text">The cocktails alone are worth the visit. The Magnolia Sour is the most beautiful drink I've ever tasted. The chocolate fondant finished us off perfectly. An unforgettable evening.</p>
+      <div class="t-author">
+        <div class="t-avatar">CM</div>
+        <div>
+          <div class="t-name">Camila M.</div>
+          <div class="t-date">Mendoza · febrero 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation">
+  <div class="reservation-bg"></div>
+  <div class="reservation-inner">
+    <div class="reveal">
+      <div class="section-label">Reservas</div>
+      <h2 class="section-title">Reserve Your <em>Table</em></h2>
+      <div class="section-divider" style="margin:1rem auto 0;"></div>
+      <p class="reservation-note">Reservations recommended for brunch, lunch, and dinner</p>
+    </div>
+    <form onsubmit="handleReservation(event)" class="reveal">
+      <div class="form-group">
+        <label for="res-name">Full Name</label>
+        <input type="text" id="res-name" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label for="res-phone">Phone</label>
+        <input type="tel" id="res-phone" placeholder="+54 261 ...">
+      </div>
+      <div class="form-group">
+        <label for="res-date">Date</label>
+        <input type="date" id="res-date" required>
+      </div>
+      <div class="form-group">
+        <label for="res-time">Time</label>
+        <select id="res-time">
+          <option value="">Select time</option>
+          <option>12:00 PM</option><option>12:30 PM</option>
+          <option>1:00 PM</option><option>1:30 PM</option>
+          <option>7:00 PM</option><option>7:30 PM</option>
+          <option>8:00 PM</option><option>8:30 PM</option>
+          <option>9:00 PM</option><option>9:30 PM</option>
+          <option>10:00 PM</option><option>10:30 PM</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="res-guests">Party Size</label>
+        <select id="res-guests">
+          <option>1 guest</option><option>2 guests</option>
+          <option>3 guests</option><option>4 guests</option>
+          <option>5 guests</option><option>6+ guests</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="res-occasion">Occasion</label>
+        <select id="res-occasion">
+          <option value="">Select occasion</option>
+          <option>Dinner</option><option>Romantic Date</option>
+          <option>Anniversary</option><option>Birthday</option>
+          <option>Business Dinner</option><option>Special Event</option>
+        </select>
+      </div>
+      <div class="form-group form-full">
+        <label for="res-requests">Special Requests</label>
+        <textarea id="res-requests" placeholder="Dietary requirements, special arrangements, allergies..."></textarea>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn-primary"><span>Confirm Reservation</span></button>
+      </div>
+    </form>
+    <p id="res-success" style="display:none;text-align:center;padding:2rem;font-family:var(--serif);font-size:1.3rem;font-style:italic;color:var(--gold);">
+      Thank you. Your reservation request has been received.<br>
+      <span style="font-size:0.8rem;color:var(--muted);font-family:var(--sans);font-style:normal;">We will confirm within 2 hours. +54 261 420-0005</span>
+    </p>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="reveal">
+    <div class="section-label">Cómo Llegar</div>
+    <h2 class="section-title">Find <em>Magnolia</em></h2>
+    <div class="section-divider"></div>
+    <div class="location-info">
+      <div class="location-item">
+        <div class="location-icon">📍</div>
+        <div>
+          <div class="location-label">Dirección</div>
+          <div class="location-value">Arístides Villanueva 165<br>Mendoza, Argentina</div>
+        </div>
+      </div>
+      <div class="location-item">
+        <div class="location-icon">📞</div>
+        <div>
+          <div class="location-label">Teléfono & Reservas</div>
+          <div class="location-value"><a href="tel:+5426142000005" style="color:var(--ivory-dim);text-decoration:none;">+54 261 420-0005</a></div>
+        </div>
+      </div>
+      <div class="location-item">
+        <div class="location-icon">🕐</div>
+        <div>
+          <div class="location-label">Horarios</div>
+          <div class="hours-grid">
+            <span class="hours-day">Lun – Vie</span><span class="hours-time">12:00 – 23:30</span>
+            <span class="hours-day">Sábados</span><span class="hours-time">11:00 – 23:30</span>
+            <span class="hours-day">Domingos</span><span class="hours-time">11:00 – 22:00</span>
+          </div>
+        </div>
+      </div>
+      <div class="location-item">
+        <div class="location-icon">🚗</div>
+        <div>
+          <div class="location-label">Estacionamiento</div>
+          <div class="location-value">Street parking available (free & paid)<br>Nearby private lots within 1 block</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="map-wrap reveal reveal-delay-2">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3350.123!2d-68.8461!3d-32.8908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967e098de00bfbc1%3A0xf9ee0b3c7b69b3e4!2sAr%C3%ADstides%20Villanueva%20165%2C%20Mendoza!5e0!3m2!1ses!2sar!4v1700000000000"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+    <div class="map-overlay-tag">Magnolia Restó · Mendoza</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Magnolia</div>
+      <p>Fine dining at the heart of Mendoza's most vibrant culinary street. Where every night becomes a memory worth keeping.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link" title="Instagram">IG</a>
+        <a href="#" class="social-link" title="Facebook">FB</a>
+        <a href="#" class="social-link" title="TripAdvisor">TA</a>
+        <a href="#" class="social-link" title="Google">G</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="#about">Nosotros</a></li>
+        <li><a href="#menu">Menú</a></li>
+        <li><a href="#wine">Vinos</a></li>
+        <li><a href="#testimonials">Reseñas</a></li>
+        <li><a href="#reservation">Reservas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Horarios</h4>
+      <p>Lun – Vie<br>12:00 – 23:30</p>
+      <br>
+      <p>Sábados<br>11:00 – 23:30</p>
+      <br>
+      <p>Domingos<br>11:00 – 22:00</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <p>Arístides Villanueva 165<br>Mendoza, Argentina</p>
+      <br>
+      <p><a href="tel:+5426142000005" style="color:var(--muted);text-decoration:none;">+54 261 420-0005</a></p>
+      <br>
+      <p><a href="mailto:reservas@magnoliaresto.com" style="color:var(--muted);text-decoration:none;">reservas@magnoliaresto.com</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Magnolia Restó. Mendoza, Argentina. All rights reserved.</p>
+    <p class="footer-tagline">"Designed for unforgettable nights."</p>
+  </div>
+</footer>
+
+<script>
+  // NAV SCROLL
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('solid', window.scrollY > 60);
+  });
+
+  // MOBILE MENU
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('open');
+  }
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // MENU TABS
+  function switchTab(id) {
+    document.querySelectorAll('.menu-tab').forEach((t, i) => {
+      const ids = ['dinner','lunch','brunch','desserts','wines','cocktails'];
+      t.classList.toggle('active', ids[i] === id);
+    });
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  // RESERVATION
+  function handleReservation(e) {
+    e.preventDefault();
+    document.querySelector('form').style.display = 'none';
+    document.getElementById('res-success').style.display = 'block';
+  }
+
+  // SET MIN DATE
+  const dateInput = document.getElementById('res-date');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+  }
+</script>
+</body>
+</html>
